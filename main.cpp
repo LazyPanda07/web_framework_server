@@ -4,9 +4,13 @@
 
 int main(int argc, char** argv)
 {
-	framework::utility::initializeWebFramework(""); // Load WebFramework shared library
+	framework::utility::initializeWebFramework("");
 
-	framework::WebFramework server(argv[1]);
+	framework::utility::Config config(argv[1]);
+
+	config.overrideBasePath("executors");
+
+	framework::WebFramework server(config);
 
 	server.start(true, []() { std::cout << "Server is running" << std::endl; });
 
