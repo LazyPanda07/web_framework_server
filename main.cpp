@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-	framework::utility::initializeWebFramework(); // Load WebFramework shared library
+	framework::utility::initializeWebFramework(""); // Load WebFramework shared library
 
 	framework::WebFramework server(argv[1]);
 
