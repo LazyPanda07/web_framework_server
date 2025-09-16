@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include <WebFramework.hpp>
+#include <import.hpp>
 
 int main(int argc, char** argv)
 {
-	framework::utility::initializeWebFramework("");
+	framework::utility::initializeWebFramework();
 
 	framework::utility::Config config(argv[1]);
 
