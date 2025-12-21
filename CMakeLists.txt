@@ -5,8 +5,6 @@ set(WEB_FRAMEWORK_TAG CACHE STRING "")
 
 project(web_framework_server)
 
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR} CACHE STRING "")
-
 find_package(WebFramework QUIET)
 
 if (NOT ${WebFramework_FOUND})
