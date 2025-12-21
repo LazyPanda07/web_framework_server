@@ -52,4 +52,4 @@ target_link_libraries(
 	WebFramework::CXX_API
 )
 
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} DESTINATION .)
