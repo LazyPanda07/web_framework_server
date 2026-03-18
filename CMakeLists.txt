@@ -2,26 +2,31 @@ cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_BUILD_TYPE Release CACHE STRING "")
 set(WEB_FRAMEWORK_TAG CACHE STRING "")
+set(PACKAGE_NAME CACHE STRING "")
 
 project(web_framework_server)
 
 find_package(WebFramework QUIET)
 
 if (NOT ${WebFramework_FOUND})
-	if (WEB_FRAMEWORK_TAG STREQUAL "")
-		message(FATAL_ERROR "WEB_FRAMEWORK_TAG must be provided")
+	if ("${WEB_FRAMEWORK_TAG}" STREQUAL "")
+		set(WEB_FRAMEWORK_URL https://github.com/LazyPanda07/WebFramework/releases/latest/download/)
+	else()
+		set(WEB_FRAMEWORK_URL https://github.com/LazyPanda07/WebFramework/releases/download/${WEB_FRAMEWORK_TAG})
 	endif()
 
 	set(FETCHCONTENT_QUIET OFF CACHE BOOL "")
 
 	include(FetchContent)
 
-	set(WEB_FRAMEWORK_URL https://github.com/LazyPanda07/WebFramework/releases/download/${WEB_FRAMEWORK_TAG})
-
-	if (UNIX)
-		set(WEB_FRAMEWORK_URL ${WEB_FRAMEWORK_URL}/linux.zip)
+	if ("${PACKAGE_NAME}" STREQUAL "")
+		if (UNIX)
+			set(WEB_FRAMEWORK_URL ${WEB_FRAMEWORK_URL}/Linux-WITH_PYTHON_EXECUTORS.OFF-BUILD_PYTHON_API.OFF--WITH_DOTNET_EXECUTORS.OFF-BUILD_CSHARP_API.OFF-BUILD_CC_API.ON.zip)
+		else()
+			set(WEB_FRAMEWORK_URL ${WEB_FRAMEWORK_URL}/Windows-WITH_PYTHON_EXECUTORS.OFF-BUILD_PYTHON_API.OFF--WITH_DOTNET_EXECUTORS.OFF-BUILD_CSHARP_API.OFF-BUILD_CC_API.ON.zip)
+		endif()
 	else()
-		set(WEB_FRAMEWORK_URL ${WEB_FRAMEWORK_URL}/windows.zip)
+		set(WEB_FRAMEWORK_URL ${WEB_FRAMEWORK_URL}/${PACKAGE_NAME})
 	endif()
 
 	FetchContent_Declare(
@@ -31,11 +36,7 @@ if (NOT ${WebFramework_FOUND})
 
 	FetchContent_MakeAvailable(WebFramework)
 
-	if (UNIX)
-		set(WEB_FRAMEWORK_SDK ${webframework_SOURCE_DIR})
-	else()
-		set(WEB_FRAMEWORK_SDK ${webframework_SOURCE_DIR}/Release_Windows)
-	endif()
+	set(WEB_FRAMEWORK_SDK ${webframework_SOURCE_DIR})
 
 	list(APPEND CMAKE_PREFIX_PATH ${WEB_FRAMEWORK_SDK})
 
